@@ -20,7 +20,7 @@ heart_icon = pygame.image.load("heart_icon.png")
 
 clock = pygame.time.Clock()
 hearts = 3
-y_places = [0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600]
+y_places = [0, 0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 600]
 
 
 class SpaceShip(object):
@@ -30,7 +30,7 @@ class SpaceShip(object):
 		self.width = width
 		self.height = height
 		self.hitbox = (self.x, self.y, self.width + 8, self.height)
-		self.vel = 4
+		self.vel = 6
 		self.up = False
 		self.right = True
 		self.down = False
@@ -75,13 +75,17 @@ class GeoFigure(object):
 		self.x = screenWidth - self.width
 		self.y = y_places[random.randint(0, len(y_places) - 1)]
 		self.hitbox = (self.x, self.y, self.width, self.height)
-		self.vel = 2 * random.randint(1, 4)
+		self.vel = 2 * random.randint(1, 4)  # 2, 4, 6, 8
 	
 	def draw(self, win):
 		pygame.draw.rect(win, (255, 255, 255), (self.x, self.y, self.width, self.height))
 		
 		self.hitbox = (self.x, self.y, self.width, self.height)
-# pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+	
+	# pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+	
+	def increaseVel(self, newVel):
+		self.vel = newVel
 
 
 def getTime():
@@ -155,7 +159,7 @@ def redrawGameWindow():
 
 font = pygame.font.SysFont("bronsimard", 32, True)  # hearts font
 ss = SpaceShip(50, (screenHeight / 2), 50, 60)
-figures = [GeoFigure(32, 32), GeoFigure(32, 32)]
+figures = [GeoFigure(32, 32), GeoFigure(32, 32), GeoFigure(32, 32), GeoFigure(32, 32)]  # starts with 4 figures
 times = dict()
 
 # counter
@@ -177,11 +181,20 @@ while run and hearts > 0:
 	if counter == 0:
 		counter = 3
 		count += 1
+		
 		if count % 5 == 0 and len(figures) <= 30:
 			figures.append(GeoFigure(32, 32))
+		
+		if count % 10 == 0 and count <= 40:  # time played is [00:30, 1:00, 1:30, 2:00]
+			for fg in figures:
+				fg.increaseVel(2 * random.randint(2, 4))  # 4, 6, 8
+		
+		if count % 10 == 0 and count > 40:  # time played is [2:30, 3:00, 3:30, ...]
+			for fg in figures:
+				fg.increaseVel(2 * random.randint(3, 5))  # 6, 8, 10
 	
 	# Moving figures and check spaceship hit
-	# print(len(figures))
+	print(len(figures))
 	for fg in figures:
 		if screenWidth > fg.x > -fg.width:
 			fg.x -= fg.vel
