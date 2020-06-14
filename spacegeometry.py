@@ -37,17 +37,11 @@ class SpaceShip(object):
 		self.left = False
 	
 	def draw(self, win):
-		if self.up:
-			win.blit(ss_up, (self.x, self.y))
+		if self.up or self.down:
+			win.blit(ss_up if self.up else ss_down, (self.x, self.y))
 			self.hitbox = (self.x, self.y, self.width + 8, self.height - 10)
-		if self.right:
-			win.blit(ss_right, (self.x, self.y))
-			self.hitbox = (self.x, self.y, self.width, self.height)
-		if self.down:
-			win.blit(ss_down, (self.x, self.y))
-			self.hitbox = (self.x, self.y, self.width + 8, self.height - 10)
-		if self.left:
-			win.blit(ss_left, (self.x, self.y))
+		if self.right or self.left:
+			win.blit(ss_right if self.right else ss_left, (self.x, self.y))
 			self.hitbox = (self.x, self.y, self.width, self.height)
 	
 	# pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
@@ -76,9 +70,15 @@ class GeoFigure(object):
 		self.y = y_places[random.randint(0, len(y_places) - 1)]
 		self.hitbox = (self.x, self.y, self.width, self.height)
 		self.vel = 2 * random.randint(1, 4)  # 2, 4, 6, 8
+		self.color = (255, 255, 255)
+		
+		# if random.randint(0, 1) <= 0.05:  # 5%
+		# 	self.color = (0, 255, 0)  # green
+		# else:
+		# 	self.color = (255, 255, 255)  # white
 	
 	def draw(self, win):
-		pygame.draw.rect(win, (255, 255, 255), (self.x, self.y, self.width, self.height))
+		pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height))
 		
 		self.hitbox = (self.x, self.y, self.width, self.height)
 	
