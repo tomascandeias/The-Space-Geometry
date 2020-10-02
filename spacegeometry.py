@@ -144,11 +144,12 @@ def redrawGameWindow():
 		
 		pygame.display.update()
 	else:
-		text1 = font.render("1º {:02.0f}:{:02.0f}".format(times.get(1)[0], times.get(1)[1]), 1,
-							(152, 251, 152))  # palegreen
+		title = font.render("SCOREBOARD", 1, (152, 251, 152))
+		text1 = font.render("1º {:02.0f}:{:02.0f}".format(times.get(1)[0], times.get(1)[1]), 1, (152, 251, 152))  # palegreen
 		text2 = font.render("2º {:02.0f}:{:02.0f}".format(times.get(2)[0], times.get(2)[1]), 1, (152, 251, 152))
 		text3 = font.render("3º {:02.0f}:{:02.0f}".format(times.get(3)[0], times.get(3)[1]), 1, (152, 251, 152))
 		
+		win.blit(title, ((screenWidth / 2) - (text1.get_width() / 2) - 25, (screenHeight / 2) - 150))
 		win.blit(text1, ((screenWidth / 2) - (text1.get_width() / 2), (screenHeight / 2) - 100))
 		win.blit(text2, ((screenWidth / 2) - (text2.get_width() / 2), (screenHeight / 2) - 50))
 		win.blit(text3, ((screenWidth / 2) - (text3.get_width() / 2), (screenHeight / 2)))
