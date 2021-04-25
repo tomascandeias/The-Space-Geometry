@@ -5,8 +5,8 @@ During quarantine, I did my first ever Python game using **pygame**! Use the spa
 
 ### Installing
 
-*[Python 3](https://www.python.org/downloads/)
-*[Pygame](https://www.pygame.org/wiki/GettingStarted)
+* [Python 3](https://www.python.org/downloads/)  
+* [Pygame](https://www.pygame.org/wiki/GettingStarted)
 
 ### Executing program
 
